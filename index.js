@@ -12,9 +12,10 @@ let guessedWord = [];
 
 let playerLeben = 8;
 score.textContent = playerLeben
-let newString = words.join("");
+let newString = words.join("").toUpperCase();//changed
 let newWord = newString.split("");
 console.log(newWord);
+console.log(newString)
 
 
 for(let i = 0; i<newWord.length; i++){
@@ -38,6 +39,8 @@ createPlaceholder();
 
 function checkWords() {
   let value = inputField.value;
+  value = value.toUpperCase()
+  console.log(value.toUpperCase())
   for (let i = 0; i < newWord.length; i++) {
     if (newWord[i] === value) {
       console.log("h");
@@ -59,6 +62,8 @@ function checkWin(array) {
   if (array.toString() === newWord.toString()) {
     let checkWinner = document.createElement("span")
     checkWinner.textContent = "You won"
+    checkWinner.style.display = "flex"
+    checkWinner.style.justifyContent = "center"
     fullbody.appendChild(checkWinner)
     console.log("You won ");
     guessBtn.disabled = true
@@ -71,6 +76,11 @@ function checkWin(array) {
 
 function checkloose() {
   if (playerLeben == 0) {
+    let checkLooser = document.createElement("span")
+    checkLooser.textContent = "You loose"
+    checkLooser.style.display = "flex"
+    checkLooser.style.justifyContent = "center"
+    fullbody.appendChild(checkLooser)
     console.log("loose");
     guessBtn.disabled = true
   }
