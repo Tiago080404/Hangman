@@ -1,0 +1,25 @@
+
+
+#head{
+    display: flex;
+    text-align: center;
+    justify-content: center;
+}
+#showscore{
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 25px;
+}
+
+#inputfield{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#inpdiv{
+    display: flex;
+    justify-content: center;
+}
