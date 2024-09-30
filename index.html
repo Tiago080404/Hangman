@@ -9,15 +9,16 @@
 <body>
     <h1 id="head">Hangman</h1>
     <div id="div1"></div>
-    <div id="inpdiv"> <input id="inputfield" type="text" value="e">
+    <div id="inpdiv"> <input id="inputfield" type="text" value="e" maxlength="1">
         <button id="submitbtn" onclick="checkWords()">Guess</button>
-        <button id="clearbtn" onclick="clearInput()">Clear</button>
-    
+        <button id="clearbtn">Start</button>
+
     </div>
     
     <p id="guessstriche"></p>
     <p id="showscore"></p>
-
+    <p id="wrongarray"></p>
+    <p id="totalwins"></p>
 
 
     <script src="index.js"></script>

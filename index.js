@@ -5,10 +5,20 @@ let clearBtn = document.getElementById("clearbtn");
 let guessStrich = document.getElementById("guessstriche");
 let gameDiv = document.getElementById("div1");
 let fullbody = document.querySelector("body")
+let wrongwords = document.getElementById("wrongarray")
+let ptotalwins = document.getElementById('totalwins')
 
+
+let totalwins = Number(loadtotalwins())
+
+if(saveWins!==0){
+  saveWins(totalwins)
+}
+ptotalwins.textContent = "Your Total wins: " + totalwins
 
 let words = ["Heye"];
 let guessedWord = [];
+let doppelteWords = [];
 
 let playerLeben = 8;
 score.textContent = playerLeben
@@ -18,9 +28,11 @@ console.log(newWord);
 console.log(newString)
 
 
+
 for(let i = 0; i<newWord.length; i++){
   guessedWord.push("_")
 }
+
 
 
 function createPlaceholder() {
@@ -37,26 +49,37 @@ function createPlaceholder() {
 }
 createPlaceholder();
 
+
+
+
+
 function checkWords() {
   let value = inputField.value;
   value = value.toUpperCase()
   console.log(value.toUpperCase())
+  if(!newWord.includes(value)||doppelteWords.includes(value)){ //changes that does not work
+    if(doppelteWords.includes(value)){
+    console.log("already tried")
+    }else{
+    doppelteWords.push(value)
+    console.log("doppelte"+doppelteWords)
+    wrongwords.textContent = doppelteWords.sort()
+    playerLeben -= 1
+    score.textContent = playerLeben
+    checkloose()
+  }}
+  else{
   for (let i = 0; i < newWord.length; i++) {
     if (newWord[i] === value) {
       console.log("h");
       guessedWord[i] = newWord[i];
     }
   }
-  if(!newWord.includes(value)){
-    playerLeben -= 1
-    score.textContent = playerLeben
-    console.log("works")
-    checkloose()
-  }
+ 
   console.log(guessedWord);
   checkWin(guessedWord);
   createPlaceholder();
-}
+}}
 
 function checkWin(array) {
   if (array.toString() === newWord.toString()) {
@@ -67,6 +90,10 @@ function checkWin(array) {
     fullbody.appendChild(checkWinner)
     console.log("You won ");
     guessBtn.disabled = true
+    totalwins += Number(1)
+    saveWins(totalwins)
+    ptotalwins.textContent = "Your Total wins: " + totalwins
+    fullbody.style.background = "green"
   }
   //console.log(array.toString()===newWord.toString())
 }
@@ -77,6 +104,7 @@ function checkWin(array) {
 function checkloose() {
   if (playerLeben == 0) {
     let checkLooser = document.createElement("span")
+    fullbody.style.backgroundColor = "red"
     checkLooser.textContent = "You loose"
     checkLooser.style.display = "flex"
     checkLooser.style.justifyContent = "center"
@@ -87,6 +115,13 @@ function checkloose() {
 }
 
 
+function saveWins(){
+  localStorage.setItem("Wins", totalwins)
+}
+
+function loadtotalwins(){
+  return localStorage.getItem ("Wins")
+}
 
 
 
@@ -94,7 +129,9 @@ function checkloose() {
 
 
 
+function startGame(){
 
+}
 
 /*function checkWords() {
   let value = inputField.value;
@@ -153,3 +190,13 @@ function playGame() {
 }
 
 guessBtn.addEventListener("onclick", checkWords);*/
+
+
+
+/*if(!newWord.includes(value)){
+  playerLeben -= 1
+  score.textContent = playerLeben
+  console.log("works")
+  checkloose() //pushs the value in to the doppeltwords method
+
+} */
