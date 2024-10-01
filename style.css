@@ -1,5 +1,3 @@
-
-
 #head{
     display: flex;
     text-align: center;
@@ -17,6 +15,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 8px;
 }
 
 #inpdiv{
@@ -31,4 +30,10 @@
 #wrongarray{
     display: flex;
     justify-content: center;
+}
+
+#totalwins{
+    position:absolute;
+    top: 0px;
+    left: 10px;
 }

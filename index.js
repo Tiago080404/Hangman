@@ -25,8 +25,26 @@ let newString;
 let newWord;
 let playerLeben;
 
-function startGame() {
-  word = "Heye";
+async function startGame() {
+  word = await fetch("https://random-word-api.herokuapp.com/word?lang=de")
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Could not fetch data");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      data[0];
+      console.log(data);
+      return data[0];
+    })
+    .catch((error) => console.log(error));
+  initiliazeGame();
+}
+
+function initiliazeGame() {
+  //word = "data";
+  wrongwords.textContent = "";
   guessedWord = [];
   doppelteWords = [];
   newString = word.toUpperCase(); //changed
@@ -66,8 +84,10 @@ function checkWords() {
     } else {
       doppelteWords.push(value);
       console.log("doppelte" + doppelteWords);
-      wrongwords.textContent = doppelteWords.sort();
+      wrongwords.textContent = "Bereits verwendet: " + doppelteWords.sort();
       playerLeben -= 1;
+      //imgname = playerLeben + ".jpg";
+      //score.textContent = imgname;
       score.textContent = playerLeben;
       checkloose();
     }
