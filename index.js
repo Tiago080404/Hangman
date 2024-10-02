@@ -8,9 +8,12 @@ let fullbody = document.querySelector("body");
 let wrongwords = document.getElementById("wrongarray");
 let ptotalwins = document.getElementById("totalwins");
 let gameresult = document.getElementById("gamresult");
+let imgHang = document.getElementById("hangimage");
 
 gameresult.style.display = "flex";
 gameresult.style.justifyContent = "center";
+
+let allowedletters = /^[A-Za-zäöüß\s]*$/;
 
 let totalwins = Number(loadtotalwins());
 
@@ -76,33 +79,37 @@ function checkWords() {
   let value = inputField.value;
   value = value.toUpperCase();
   console.log(value.toUpperCase());
-  inputField.value = "";
-  if (!newWord.includes(value) || doppelteWords.includes(value)) {
-    //changes that does not work
-    if (doppelteWords.includes(value)) {
-      console.log("already tried");
-    } else {
-      doppelteWords.push(value);
-      console.log("doppelte" + doppelteWords);
-      wrongwords.textContent = "Bereits verwendet: " + doppelteWords.sort();
-      playerLeben -= 1;
-      //imgname = playerLeben + ".jpg";
-      //score.textContent = imgname;
-      score.textContent = playerLeben;
-      checkloose();
-    }
-  } else {
-    for (let i = 0; i < newWord.length; i++) {
-      if (newWord[i] === value) {
-        console.log("h");
-        guessedWord[i] = newWord[i];
-      }
-    }
 
-    console.log(guessedWord);
-    checkWin(guessedWord);
-    displayWord();
+  if (inputField.value.match(allowedletters)) {
+    console.log("worked");
+    if (!newWord.includes(value) || doppelteWords.includes(value)) {
+      //changes that does not work
+      if (doppelteWords.includes(value)) {
+        console.log("already tried");
+      } else {
+        doppelteWords.push(value);
+        console.log("doppelte" + doppelteWords);
+        wrongwords.textContent = "Bereits verwendet: " + doppelteWords.sort();
+        playerLeben -= 1;
+        let imgname = playerLeben + ".jpg";
+        imgHang.src = imgname;
+        score.textContent = playerLeben;
+        checkloose();
+      }
+    } else {
+      for (let i = 0; i < newWord.length; i++) {
+        if (newWord[i] === value) {
+          console.log("h");
+          guessedWord[i] = newWord[i];
+        }
+      }
+
+      console.log(guessedWord);
+      checkWin(guessedWord);
+      displayWord();
+    }
   }
+  inputField.value = "";
 }
 
 function checkWin(array) {
