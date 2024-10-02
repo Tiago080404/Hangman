@@ -47,6 +47,7 @@ async function startGame() {
 
 function initiliazeGame() {
   //word = "data";
+  imgHang.src = "8.jpg";
   wrongwords.textContent = "";
   guessedWord = [];
   doppelteWords = [];
@@ -58,7 +59,11 @@ function initiliazeGame() {
   gameresult.textContent = "";
   fullbody.style.background = "white";
   for (let i = 0; i < newWord.length; i++) {
-    guessedWord.push("_");
+    if (newWord[i] == " ") {
+      guessedWord.push(" ");
+    } else {
+      guessedWord.push("_");
+    }
   }
   displayWord();
 }
@@ -121,7 +126,6 @@ function checkWin(array) {
     ptotalwins.textContent = "Your Total wins: " + totalwins;
     fullbody.style.background = "green";
   }
-  //console.log(array.toString()===newWord.toString())
 }
 
 function checkloose() {
