@@ -1,3 +1,10 @@
+body{
+    background-color: transparent;
+}
+
+
+
+
 #head{
     display: flex;
     text-align: center;

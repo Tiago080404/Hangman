@@ -98,7 +98,7 @@ function checkWords() {
         console.log("doppelte" + doppelteWords);
         wrongwords.textContent = "Bereits verwendet: " + doppelteWords.sort();
         playerLeben -= 1;
-        let imgname = playerLeben + ".jpg";
+        let imgname = playerLeben + ".png";
         imgHang.src = imgname;
         score.textContent = playerLeben;
         checkloose();
