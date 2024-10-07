@@ -9,6 +9,7 @@ let wrongwords = document.getElementById("wrongarray");
 let ptotalwins = document.getElementById("totalwins");
 let gameresult = document.getElementById("gamresult");
 let imgHang = document.getElementById("hangimage");
+let showWord = document.getElementById("showWord");
 
 gameresult.style.display = "flex";
 gameresult.style.justifyContent = "center";
@@ -134,6 +135,10 @@ function checkloose() {
     gameresult.textContent = "You loose";
 
     guessBtn.disabled = true;
+    showWord.textContent = "The word was: " + newWord.join("");
+    showWord.style.display = "flex";
+    showWord.style.justifyContent = "center";
+    showWord.style.textAlign = "center";
   }
 }
 
