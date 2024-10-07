@@ -48,6 +48,7 @@ async function startGame() {
 
 function initiliazeGame() {
   //word = "data";
+  showWord.textContent = "";
   imgHang.src = "8.jpg";
   wrongwords.textContent = "";
   guessedWord = [];
