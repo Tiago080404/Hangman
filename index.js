@@ -1,15 +1,15 @@
-let inputField = document.getElementById("inputfield");
-let guessBtn = document.getElementById("submitbtn");
-let score = document.getElementById("showscore");
-let clearBtn = document.getElementById("clearbtn");
-let guessStrich = document.getElementById("guessstriche");
-let gameDiv = document.getElementById("div1");
-let fullbody = document.querySelector("body");
-let wrongwords = document.getElementById("wrongarray");
-let ptotalwins = document.getElementById("totalwins");
-let gameresult = document.getElementById("gamresult");
-let imgHang = document.getElementById("hangimage");
-let showWord = document.getElementById("showWord");
+const inputField = document.getElementById("inputfield");
+const guessBtn = document.getElementById("submitbtn");
+const score = document.getElementById("showscore");
+const clearBtn = document.getElementById("clearbtn");
+const guessStrich = document.getElementById("guessstriche");
+const gameDiv = document.getElementById("div1");
+const fullbody = document.querySelector("body");
+const wrongwords = document.getElementById("wrongarray");
+const ptotalwins = document.getElementById("totalwins");
+const gameresult = document.getElementById("gamresult");
+const imgHang = document.getElementById("hangimage");
+const showWord = document.getElementById("showWord");
 
 gameresult.style.display = "flex";
 gameresult.style.justifyContent = "center";
@@ -89,28 +89,23 @@ function checkWords() {
 
   if (inputField.value.match(allowedletters)) {
     console.log("worked");
-    if (!newWord.includes(value) || doppelteWords.includes(value)) {
+    for (let i = 0; i < newWord.length; i++) {
+      if (newWord[i] === value) {
+        console.log("h");
+        guessedWord[i] = newWord[i];
+      }
+    }
+    if (!newWord.includes(value) && !doppelteWords.includes(value)) {
       //changes that does not work
-      if (doppelteWords.includes(value)) {
-        console.log("already tried");
-      } else {
-        doppelteWords.push(value);
-        console.log("doppelte" + doppelteWords);
-        wrongwords.textContent = "Bereits verwendet: " + doppelteWords.sort();
-        playerLeben -= 1;
-        let imgname = playerLeben + ".png";
-        imgHang.src = imgname;
-        score.textContent = playerLeben;
-        checkloose();
-      }
+      doppelteWords.push(value);
+      console.log("doppelte" + doppelteWords);
+      wrongwords.textContent = "Bereits verwendet: " + doppelteWords.sort();
+      playerLeben -= 1;
+      let imgname = playerLeben + ".png";
+      imgHang.src = imgname;
+      score.textContent = playerLeben;
+      checkloose();
     } else {
-      for (let i = 0; i < newWord.length; i++) {
-        if (newWord[i] === value) {
-          console.log("h");
-          guessedWord[i] = newWord[i];
-        }
-      }
-
       console.log(guessedWord);
       checkWin(guessedWord);
       displayWord();
@@ -134,7 +129,6 @@ function checkloose() {
   if (playerLeben == 0) {
     fullbody.style.backgroundColor = "red";
     gameresult.textContent = "You loose";
-
     guessBtn.disabled = true;
     showWord.textContent = "The word was: " + newWord.join("");
     showWord.style.display = "flex";
