@@ -2,7 +2,7 @@
 A simple Hangman Game which fetches a random Word from an api.
 
 # How to use
-Feel free to use my public Game from my [Github page](https://github.com/Tiago080404/Hangman)
+Feel free to use my public Game from my [Github page](file:///home/tiago/Projects/Hangman/index.html)
 
 # How to run
 Clone the repository in your local file with git clone "git@github.com:Tiago080404/Hangman.git"
