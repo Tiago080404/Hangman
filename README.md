@@ -2,9 +2,10 @@
 A simple Hangman Game which fetches a random Word from an api.
 
 # How to use
-Clone the repository in your local file with git clone "git@github.com:Tiago080404/Hangman.git"
+Feel free to use my public Game from my [Github page](https://github.com/Tiago080404/Hangman)
 
 # How to run
+Clone the repository in your local file with git clone "git@github.com:Tiago080404/Hangman.git"
 Open the index.html in the browser. Start the game by typing in any letter in the inputfield and then press the guess button.
 
 # How to change
