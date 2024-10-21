@@ -2,7 +2,10 @@ body{
     background-color: transparent;
 }
 
-
+#game-result{
+    display: flex;
+    justify-content: center;
+}
 
 
 #head{
@@ -10,7 +13,7 @@ body{
     text-align: center;
     justify-content: center;
 }
-#showscore{
+#score{
   position: absolute;
   top: 0px;
   right: 10px;
@@ -18,7 +21,7 @@ body{
   font-size: 25px;
 }
 
-#inputfield{
+#input-field{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,17 +33,28 @@ body{
     justify-content: center;
 }
 
-#div1{
+#game-word{
     display: flex;
     justify-content: center;
 }
-#wrongarray{
+#wrong-chars{
     display: flex;
     justify-content: center;
 }
 
-#totalwins{
+#total-wins{
     position:absolute;
     top: 0px;
     left: 10px;
 }
+
+#game-word > span{
+    margin: 5px;
+}
+#correct-word{
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+

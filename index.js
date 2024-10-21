@@ -1,20 +1,16 @@
-const inputField = document.getElementById("inputfield");
-const guessBtn = document.getElementById("submitbtn");
-const score = document.getElementById("showscore");
-const clearBtn = document.getElementById("clearbtn");
-const guessStrich = document.getElementById("guessstriche");
-const gameDiv = document.getElementById("div1");
+const inputField = document.getElementById("input-field");
+const guessBtn = document.getElementById("guess-btn");
+const score = document.getElementById("score");
+const startBtn = document.getElementById("start-btn");
+const gameWord = document.getElementById("game-word");
 const fullbody = document.querySelector("body");
-const wrongwords = document.getElementById("wrongarray");
-const ptotalwins = document.getElementById("totalwins");
-const gameresult = document.getElementById("gamresult");
-const imgHang = document.getElementById("hangimage");
-const showWord = document.getElementById("showWord");
+const wrongCharsDiv = document.getElementById("wrong-chars");
+const totalWinsP = document.getElementById("total-wins");
+const gameResult = document.getElementById("game-result");
+const hangManImg = document.getElementById("hang-man");
+const correctWord = document.getElementById("correct-word");
 
-gameresult.style.display = "flex";
-gameresult.style.justifyContent = "center";
-
-let allowedletters = /^[A-Za-zäöüß\s]*$/;
+const allowedletters = /^[A-ZÄÖÜß\s]*$/;
 
 let totalwins = Number(loadtotalwins());
 
@@ -22,15 +18,13 @@ if (saveWins !== 0) {
   saveWins(totalwins);
 }
 
-let word;
 let guessedWord;
-let doppelteWords;
-let newString;
-let newWord;
-let playerLeben;
+let wrongChars;
+let secretWord;
+let playerLife;
 
-async function startGame() {
-  word = await fetch("https://random-word-api.herokuapp.com/word?lang=de")
+async function fetchWord() {
+  return await fetch("https://random-word-api.herokuapp.com/word?lang=de")
     .then((response) => {
       if (!response.ok) {
         throw new Error("Could not fetch data");
@@ -40,28 +34,26 @@ async function startGame() {
     .then((data) => {
       data[0];
       console.log(data);
-      return data[0];
+      return data[0].toUpperCase().split("");
     })
     .catch((error) => console.log(error));
-  initiliazeGame();
 }
 
-function initiliazeGame() {
-  //word = "data";
-  showWord.textContent = "";
-  imgHang.src = "8.jpg";
-  wrongwords.textContent = "";
+async function startGame() {
+  correctWord.textContent = "";
+  hangManImg.src = "8.jpg";
+  wrongCharsDiv.textContent = "";
   guessedWord = [];
-  doppelteWords = [];
-  newString = word.toUpperCase(); //changed
-  newWord = newString.split("");
-  playerLeben = 8;
-  score.textContent = playerLeben;
+  wrongChars = [];
+  secretWord = await fetchWord();
+  playerLife = 8;
+  score.textContent = playerLife;
   guessBtn.disabled = false;
-  gameresult.textContent = "";
+  gameResult.textContent = "";
   fullbody.style.background = "white";
-  for (let i = 0; i < newWord.length; i++) {
-    if (newWord[i] == " ") {
+  totalWinsP.textContent = "Your Total wins: " + totalwins;
+  for (let i = 0; i < secretWord.length; i++) {
+    if (secretWord[i] == " ") {
       guessedWord.push(" ");
     } else {
       guessedWord.push("_");
@@ -69,71 +61,63 @@ function initiliazeGame() {
   }
   displayWord();
 }
-ptotalwins.textContent = "Your Total wins: " + totalwins;
 
 function displayWord() {
-  gameDiv.textContent = "";
+  gameWord.textContent = "";
 
   for (let i = 0; i < guessedWord.length; i++) {
-    let textStriche = document.createElement("span");
-    textStriche.textContent = guessedWord[i];
-    textStriche.style.margin = "5px";
-    gameDiv.appendChild(textStriche);
+    const span = document.createElement("span");
+    span.textContent = guessedWord[i];
+    gameWord.appendChild(span);
   }
 }
 
-function checkWords() {
-  let value = inputField.value;
-  value = value.toUpperCase();
-  console.log(value.toUpperCase());
+function checkGuess() {
+  let value = inputField.value.toUpperCase();
+  console.log(value);
 
-  if (inputField.value.match(allowedletters)) {
+  if (value.match(allowedletters)) {
     console.log("worked");
-    for (let i = 0; i < newWord.length; i++) {
-      if (newWord[i] === value) {
+    for (let i = 0; i < secretWord.length; i++) {
+      if (secretWord[i] === value) {
         console.log("h");
-        guessedWord[i] = newWord[i];
+        guessedWord[i] = secretWord[i];
       }
     }
-    if (!newWord.includes(value) && !doppelteWords.includes(value)) {
-      //changes that does not work
-      doppelteWords.push(value);
-      console.log("doppelte" + doppelteWords);
-      wrongwords.textContent = "Bereits verwendet: " + doppelteWords.sort();
-      playerLeben -= 1;
-      let imgname = playerLeben + ".png";
-      imgHang.src = imgname;
-      score.textContent = playerLeben;
-      checkloose();
+    if (!secretWord.includes(value) && !wrongChars.includes(value)) {
+      wrongChars.push(value);
+      console.log("doppelte" + wrongChars);
+      wrongCharsDiv.textContent = "Bereits verwendet: " + wrongChars.sort();
+      playerLife -= 1;
+      hangManImg.src = `${playerLife}.png`;
+      score.textContent = playerLife;
+      checkLose();
     } else {
       console.log(guessedWord);
-      checkWin(guessedWord);
+      checkWin();
       displayWord();
     }
   }
   inputField.value = "";
 }
 
-function checkWin(array) {
-  if (array.toString() === newWord.toString()) {
-    gameresult.textContent = "You won";
+function checkWin() {
+  if (guessedWord.toString() === secretWord.toString()) {
+    gameResult.textContent = "You won";
     guessBtn.disabled = true;
     totalwins += 1;
     saveWins(totalwins);
-    ptotalwins.textContent = "Your Total wins: " + totalwins;
+    totalWinsP.textContent = "Your Total wins: " + totalwins;
     fullbody.style.background = "green";
   }
 }
 
-function checkloose() {
-  if (playerLeben == 0) {
+function checkLose() {
+  if (playerLife == 0) {
     fullbody.style.backgroundColor = "red";
-    gameresult.textContent = "You loose";
+    gameResult.textContent = "You loose";
     guessBtn.disabled = true;
-    showWord.textContent = "The word was: " + newWord.join("");
-    showWord.style.display = "flex";
-    showWord.style.justifyContent = "center";
-    showWord.style.textAlign = "center";
+    correctWord.textContent = "The word was: " + secretWord.join("");
   }
 }
 
@@ -146,69 +130,4 @@ function loadtotalwins() {
 }
 
 startGame();
-clearBtn.addEventListener("click", startGame);
-/*function checkWords() {
-  let value = inputField.value;
-  for (e of newWord) {
-    if (e == value) {
-      const wörter = document.createElement("p")
-      wörter.textContent = e
-      
-      console.log(e);
-      score.textContent = e;
-      guessedWord.push(e);
-    }
-  }
-  inputField .value = ""
-  score.textContent = value;
-  console.log(guessedWord);
-}
-
-function clearInput() {
-  inputField = "";
-  console.log("he");
-}
-
-
-
-function checkloose() {
-  if (leben == 0) {
-    console.log("loose");
-  }
-}
-
-clearBtn.addEventListener("onclick", clearInput);
-guessBtn.addEventListener("onclick", checkWords);
-
-
-
-
-
-function checkWords() {
-    let value = inputField.value
-    console.log(value)
-    
-    for (e of newArr){
-        if(value == e){
-            console.log("good")
-        }else{
-            console.log("no")
-            score.textContent = value
-
-        }
-    }
-}
-
-function playGame() {
-  console.log(inputField.value);
-}
-
-guessBtn.addEventListener("onclick", checkWords);*/
-
-/*if(!newWord.includes(value)){
-  playerLeben -= 1
-  score.textContent = playerLeben
-  console.log("works")
-  checkloose() //pushs the value in to the doppeltwords method
-
-} */
+startBtn.addEventListener("click", startGame);

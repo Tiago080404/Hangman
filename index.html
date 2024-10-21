@@ -8,19 +8,18 @@
 </head>
 <body>
     <h1 id="head">Hangman</h1>
-    <div id="div1"></div>
-    <div id="inpdiv"> <input id="inputfield" type="text" value="e" maxlength="1">
-        <button id="submitbtn" onclick="checkWords()">Guess</button>
-        <button id="clearbtn">Start</button>
+    <div id="game-word"></div>
+    <div id="inpdiv"> <input id="input-field" type="text" value="e" maxlength="1">
+        <button id="guess-btn" onclick="checkGuess()">Guess</button>
+        <button id="start-btn">Start</button>
 
     </div>
-    <div id="gamresult"></div>
-    <p id="guessstriche"></p>
-    <p id="showscore"></p>
-    <p id="wrongarray"></p>
-    <p id="totalwins"></p> 
-    <p id="showWord"></p>
-    <img id="hangimage"></img>
+    <div id="game-result"></div>
+    <p id="score"></p>
+    <p id="wrong-chars"></p>
+    <p id="total-wins"></p> 
+    <p id="correct-word"></p>
+    <img id="hang-man"></img>
 
     <script src="index.js"></script>
 </body>
